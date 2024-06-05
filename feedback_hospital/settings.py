@@ -1,19 +1,26 @@
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+import environ
 
-# SECURITY WARNING: keep the secret key used in production secret!
+env = environ.Env()
+
+environ.Env.read_env()
+
+
+
+
 SECRET_KEY = 'django-insecure-bpxdg3z+v*jqp^k02fw_px2jhrr#1e3f7q+1tc!((@g7is__tp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,6 +55,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
     "http://localhost:8000",
+    "http://localhost:3000",
 ]
 
 # Correcting the typo
@@ -87,15 +95,19 @@ WSGI_APPLICATION = 'feedback_hospital.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'feedback_hospital',
+#         'USER': 'root',
+#         'HOST': 'localhost',
+#         'PASSWORD': '',
+#         'PORT': '3306'
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'feedback_hospital',
-        'USER': 'root',
-        'HOST': 'localhost',
-        'PASSWORD': '',
-        'PORT': '3306'
-    }
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 
